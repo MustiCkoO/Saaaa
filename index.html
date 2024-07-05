@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+<link href="style.css" rel="stylesheet" />
+<style>
+
+*{
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+    font-family: system-ui;
+	
+	}
+	
+body{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	height:100vh;
+	background: radial-gradient(circle, #000000, #77f900d9);
+
+
+	}
+.clock{
+	width:500px;
+	height:500px;
+	position:relative;
+	border-radius:50%;
+	display:flex;
+	justify-content:center;
+	align-items: center;
+    background: radial-gradient(circle, #ff00008a, #3d00f9bd);
+	
+	
+	
+	box-shadow: 0 0 15px rgba(0,0,0,0.5);
+	z-index: -1;
+
+	}
+	
+.clock::before{
+	content:"";
+    width:525px;
+	height:525px;
+	position:absolute;
+	border-radius:50%;
+	background: liner-gradient(to right, #00d9ff, #ee00ff);
+	box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.2);	
+	z-index:-1;
+		}
+		
+.number{
+    transform: rotate(calc(30deg * var(--n)));
+	position:absolute;
+	text-align:center;
+	inset:20px;
+	font-size:40px;
+	color:#00d9ff;
+	text-shadow: 0 0 12px #ee00ff;
+	animation: changeShadowColor 1s infinite;
+	}
+	
+	
+.number b{
+	transform:rotate(calc(-30deg * var(--n)));
+	display:inline-block;
+	}
+	
+.center-dot{
+	position:absolute;
+	width:25px;
+	height:25px;
+	background-color:#ee00ff;
+	border: 6px solid #00d9ff;
+	border-radius:50%;
+}
+	
+.hour-hand, .minute-hand, .second-hand{
+	--rotat:0;
+	position:absolute;
+	left:50%;
+	bottom:50%;
+	transform:translate(-50%) rotate(calc(var(--rotate) *1deg));
+	transform-origin:bottom;
+	border-radius:30px 30px 0 0;
+		}
+	
+.hour-hand{
+	--rotate:0;
+	width:12px;
+	height:130px;
+	background: linear-gradient(45deg, #00d9ff , #e4e70cc2);
+	transform:translate(-50%) rotate(calc(var(--rotate) * 1deg));
+	}
+	
+	
+.minute-hand{
+	width:12px;
+	height:190px;
+	background: linear-gradient(to top, #c71010, #0cc9e7c2);
+	}	
+
+.second-hand{ 
+   width:6px;
+   height:210px;
+   background:linear-gradient(to top, rgb(193, 21, 21), rgba(54, 235, 9, 0.45));	
+	}
+
+
+
+
+
+
+
+
+</style>
+
+
+
+
+<body>
+
+
+
+<div class="clock">
+
+<div class="number"style="--n:1"><b>1</b></div>
+<div class="number"style="--n:2"><b>2</b></div>
+<div class="number"style="--n:3"><b>3</b></div>
+<div class="number"style="--n:4"><b>4</b></div>
+<div class="number"style="--n:5"><b>5</b></div>
+<div class="number"style="--n:6"><b>6</b></div>
+<div class="number"style="--n:7"><b>7</b></div>
+<div class="number"style="--n:8"><b>8</b></div>
+<div class="number"style="--n:9"><b>9</b></div>
+<div class="number"style="--n:10"><b>10</b></div>
+<div class="number"style="--n:11"><b>11</b></div>
+<div class="number"style="--n:12"><b>12</b></div>
+
+
+<div class="hour-hand"   id="hour-hand"></div>
+<div class="minute-hand" id="minute-hand"></div>
+<div class="second-hand" id="second-hand"></div>
+<div class="center-dot"></div>
+
+</div>
+
+
+<script type="text/javascript" src="script.js"></script>
+<script>
+const secondHand = document.getElementById('second-hand');
+const minuteHand =document.getElementById ('minute-hand');
+const hourHand =document.getElementById  ('hour-hand');
+
+function clockTick(){
+	
+	const data = new Date();
+	const seconds = data.getSeconds() /60;
+	const minutes = (seconds + data.getMinutes()) /60;
+	const hours = (minutes + data.getHours()) /12;
+	
+	rotateClockHand(secondHand, seconds);
+	rotateClockHand(minuteHand, minutes);
+	rotateClockHand(hourHand, hours);
+	
+	}
+function rotateClockHand(element, rotation){
+	element.style.setProperty('--rotate', rotation * 360);
+}
+setInterval(clockTick,1000);
+</script>
+
+
+
+
+</body>
+</html>
